@@ -15,7 +15,8 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword} = formFields;
 
-    console.log(formFields);
+    // when values in UserContext change, the component will rerun (but not rerender unless jsx value update based on this value) even if we don't use the values
+    //const val = useContext(UserContext);
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
@@ -30,8 +31,11 @@ const SignUpForm = () => {
         };
 
         try {
-            const { user } = await createAuthUserWithEmailAndPassword(email, password);
-
+            const { user } = await createAuthUserWithEmailAndPassword(
+                email, 
+                password
+            );
+            
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
 
